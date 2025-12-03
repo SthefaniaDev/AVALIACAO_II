@@ -2,7 +2,7 @@
  * 1. Classe CircularLinkedList
  * Implementa uma lista circular simples.
  */
-const no = require('./node.js')
+const No = require('./node.js')
 module.exports = class CircularLinkedList {
     constructor() {
         //ponteiros principais
@@ -14,7 +14,7 @@ module.exports = class CircularLinkedList {
     }
 //** MÉTODOS ACESSÓRIOS **//
     isEmpty(){
-        this.count === 0 //verifica se é igual em tipo e valor
+        return this.count === 0 //verifica se é igual em tipo e valor
     }
 
     size(){
@@ -44,6 +44,33 @@ const newNo = new No(element)
         newNo.next = this.head
         this.tail = newNo
     }
-    this.count++
+    this.count++ 
+}
+
+current() {
+    // Caso não exista um nó atual (lista vazia)
+    if(this.noAtual === null){
+        return undefined
+    }
+    // Retorna o valor armazenado no nó atual da lista circular
+    else{
+        return this.noAtual.data  
+    }
+}
+rotate(steps){
+    // Se a lista estiver vazia, não há como girar  
+    if (this.isEmpty()) return;
+
+    /** Avança 'steps' posições na lista circular
+    // Como a lista é circular, o ponteiro 'noAtual' sempre continuará girando
+    */ 
+    for (let i = 0; i < steps; i++){
+        this.noAtual = this.noAtual.next
+    }
+    // Retorna o novo nó atual após a rotação
+    return this.noAtual
+}
+next(){
+    return this.rotate(1) //serve para avançar  
 }
 }
