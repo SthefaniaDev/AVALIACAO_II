@@ -12,7 +12,7 @@ module.exports = class CircularLinkedList {
         this.noAtual = null
         
     }
-//MÉTODOS ACESSÓRIOS//
+//** MÉTODOS ACESSÓRIOS **//
     isEmpty(){
         this.count === 0 //verifica se é igual em tipo e valor
     }
@@ -27,4 +27,23 @@ module.exports = class CircularLinkedList {
         this.count = 0
         this.noAtual = null  //limpa os atributos. retornando ao seu estágio inicial
     }
+/**
+//** MÉTODOS PRINCIPAIS */
+insert(element){
+const newNo = new No(element)
+   if (this.isEmpty()) {
+        // Primeiro nó aponta para si mesmo
+        this.head = newNo
+        this.tail = newNo
+        this.noAtual = newNo
+        this.tail.next = this.head
+    }
+    else{
+        // Último nó passa a apontar para o novo
+        this.tail.next = newNo
+        newNo.next = this.head
+        this.tail = newNo
+    }
+    this.count++
+}
 }
