@@ -2,6 +2,7 @@
  * 1. Classe CircularLinkedList
  * Implementa uma lista circular simples.
  */
+const no = require('./node.js')
 module.exports = class CircularLinkedList {
     constructor() {
         //ponteiros principais
