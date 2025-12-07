@@ -1,10 +1,10 @@
 /**
  Classe responsável por representar um único nó da lista circular
  */
-module.exports = class nodeList{
+module.exports = class Node{
     constructor(data){
         // Valor que será armazenado dentro do nó
-        this.data = data
+        this.data = data;
 
          // Referência para o próximo nó da lista
         this.next = undefined

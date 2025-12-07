@@ -2,7 +2,7 @@
  * 1. Classe CircularLinkedList
  * Implementa uma lista circular simples.
  */
-const No = require("./node.js");
+const Node = require("./node.js");
 module.exports = class CircularLinkedList {
   constructor() {
     //ponteiros principais
@@ -34,7 +34,7 @@ module.exports = class CircularLinkedList {
  */
 
   insert(element) {
-    const newNo = new No(element);
+    const newNo = new Node(element);
     if (this.isEmpty()) {
       // Primeiro nó aponta para si mesmo
       this.head = newNo;
