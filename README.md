@@ -56,7 +56,7 @@ Para rodar os casos de teste e verificar o funcionamento da `CircularLinkedList`
 2. **Execute o arquivo de testes** usando o Node:
 
    ```bash
-   node teste.js
+   node test-ticket-system.js
    ```
 
    O terminal exibirá toda a simulação do sistema de senhas: emissão, chamadas sucessivas, pulos, remoções, reinício do ciclo e comportamento circular contínuo.
@@ -65,9 +65,9 @@ Para rodar os casos de teste e verificar o funcionamento da `CircularLinkedList`
 
 | Arquivo                 | Descrição                                                                                                                                                     |
 | :---------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `node.js`               | Classe `nodeList` que representa um nó da lista, armazenando o valor e o ponteiro `next`.                                                                     |
-| `CircularLinkedList.js` | **Implementação da Lista Circular** (`CircularLinkedList`) com métodos essenciais (`insert`, `remove`, `next`, `current`, `clear`, `size`, `isEmpty`).        |
-| `TicketSystem.js`       | **Solução do Problema 2**, que utiliza a lista circular para simular um sistema real de senhas (emitir, chamar, pular, remover e reiniciar ciclo).            |
-| `teste.js`              | Conjunto de **testes completos**, mostrando o comportamento circular, a movimentação contínua, remoções em todos os casos e o funcionamento geral do sistema. |
+| `node.js`               | Classe `Node` que representa um nó da lista, armazenando o valor e o ponteiro `next`.                                                                     |
+| `circular-linked-list.js` | **Implementação da Lista Circular** (`CircularLinkedList`) com métodos essenciais (`insert`, `remove`, `next`, `current`, `clear`, `size`, `isEmpty`).        |
+| `ticket-system.js`       | **Solução do Problema 2**, que utiliza a lista circular para simular um sistema real de senhas (emitir, chamar, pular, remover e reiniciar ciclo).            |
+| `test-ticket-system.js`              | Conjunto de **testes completos**, mostrando o comportamento circular, a movimentação contínua, remoções em todos os casos e o funcionamento geral do sistema. |
 
 ---
