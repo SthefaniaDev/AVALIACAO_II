@@ -1,7 +1,6 @@
 import { DoublyLinkedList } from "./doubly-linked-list.js";
 
 /**
- * 2. Classe ActionHistory
  * Gerencia o histórico de ações de um editor de texto usando DoublyLinkedList.
  */
 export class ActionHistory {
@@ -74,7 +73,6 @@ export class ActionHistory {
   }
 
   /**
-   * clearAll()
    * Limpa todo o histórico.
    */
   clearAll() {
@@ -96,7 +94,6 @@ export class ActionHistory {
   Remove um item da lista pelo valor informado
 */
   removeByValue(value) {
-
     // Se a lista estiver vazia, não há o que remover
     if (this.history.isEmpty()) {
       return false;
@@ -107,10 +104,8 @@ export class ActionHistory {
 
     // Percorre toda a lista enquanto houver nós
     while (current) {
-
       // Verifica se o valor do nó atual é igual ao valor procurado
       if (current.element === value) {
-
         // Se o nó a ser removido for o nó atual (currentAction),
         // ajusta o ponteiro para o anterior ou para o próximo
         if (this.currentAction === current) {
@@ -119,28 +114,28 @@ export class ActionHistory {
 
         // Caso 1: O nó a ser removido é o primeiro da lista (head)
         if (current === this.history.head) {
-          this.history.head = current.next;         // O próximo vira o novo head
+          this.history.head = current.next; // O próximo vira o novo head
 
           if (this.history.head) {
-            this.history.head.prev = undefined;     // Remove o vínculo com o nó antigo
+            this.history.head.prev = undefined; // Remove o vínculo com o nó antigo
           } else {
-            this.history.tail = null;               // Se não sobrar nenhum nó, limpa tail também
+            this.history.tail = null; // Se não sobrar nenhum nó, limpa tail também
           }
         }
 
         // Caso 2: O nó a ser removido é o último da lista (tail)
         else if (current === this.history.tail) {
-          this.history.tail = current.prev;         // O anterior vira o novo tail
+          this.history.tail = current.prev; // O anterior vira o novo tail
 
           if (this.history.tail) {
-            this.history.tail.next = undefined;     // Remove o vínculo com o nó antigo
+            this.history.tail.next = undefined; // Remove o vínculo com o nó antigo
           }
         }
 
         // Caso 3: O nó está no meio da lista
         else {
-          current.prev.next = current.next;         // O anterior agora aponta para o próximo
-          current.next.prev = current.prev;         // O próximo agora aponta para o anterior
+          current.prev.next = current.next; // O anterior agora aponta para o próximo
+          current.next.prev = current.prev; // O próximo agora aponta para o anterior
         }
 
         // Diminui a contagem de elementos da lista
@@ -157,5 +152,4 @@ export class ActionHistory {
     // Se chegou aqui, o valor não foi encontrado
     return false;
   }
-
 }
