@@ -1,4 +1,4 @@
-const CircularLinkedList = require('./CircularLinkedList');
+const CircularLinkedList = require('./circular-linked-list');
 
 module.exports = class TicketSystem{
     constructor(){

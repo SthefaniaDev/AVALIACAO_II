@@ -1,4 +1,4 @@
-const TicketSystem = require('./TicketSystem');
+const TicketSystem = require('./ticket-system');
 
 const system = new TicketSystem();
 
