@@ -12,9 +12,53 @@ export class DoublyLinkedList {
     this.tail = undefined; // Referência interna para o final da lista (NOVO)
     this.equalsFn = equalsFn;
   }
-
+  
   // --- Métodos principais obrigatórios da Doubly liked list ---
 
+  // Reutiliza o método insertDoubly, passando o índice final
+  insert(element) {
+    // adiciona um elemento no final de um objeto LinkedList
+    // Reutiliza a lógica de inserção no final do insertDoubly
+    return this.insertDoubly(element, this.count);
+  }
+
+  remove(node) {
+    // remove(node) - remove um nó específico da lista.
+    if (!node) {
+      return undefined;
+    }
+    if (node === this.head) {
+      this.head = node.next;
+      if (this.head) {
+        this.head.previous = undefined; // Remove a referência 'previous' do novo head
+      } else {
+        this.tail = null; // A lista ficou vazia
+      }
+    } else if (node === this.tail) {
+      this.tail = node.previous; // Atualiza tail usando previous
+      if (this.tail) {
+        this.tail.next = undefined; // Remove a referência 'next' do novo tail
+      }
+    } else {
+      // Nó no meio: faz o bypass (liga os vizinhos entre si)
+      node.previous.next = node.next; // Liga o anterior ao próximo
+      node.next.previous = node.previous; // Liga o próximo ao anterior
+    }
+
+    this.count--;
+    return node.element;
+  }
+  // getNext(node) - retorna o próximo nó.
+  getNext(node) {
+    return node ? node.next : undefined;
+  }
+
+  // getPrev(node) - retorna o nó anterior.
+  getPrev(node) {
+    return node ? node.previous : undefined; // Retorna o nó anterior (previous)
+  }
+
+  // --- Métodos principais obrigatórios da liked list ---
   // Inserindo um novo elemento em qualquer posição
   insertDoubly(element, index) {
     // Verifica se o index (a posição) é válido.
@@ -46,11 +90,12 @@ export class DoublyLinkedList {
         this.tail = node; // atualiza o tail
       }
       // insere no meio
+      //
       else {
-        const previous = this.getElementAt(index - 1); //  previous = anterior (index - 1)
-        atual = previous.next; //  O código identifica o vizinho próximo
+        const previous = this.getElementAt(index - 1); // 0 = 2 previous = anterior (index - 1)
+        atual = previous.next; // 1 = 5 O código identifica o vizinho próximo
 
-        node.next = atual; //  novo = qnd vc avançar terá numero (ligação para frente)
+        node.next = atual; // 1 = 12 novo = qnd vc avançar terá numero (ligação para frente)
         previous.next = node; //  O nó anterior aponta pro novo nó
         atual.previous = node; //  NOVO: O nó próximo reconhece o novo nó (PREVIOUS)
         node.previous = previous; // NOVO: O novo nó diz quem é o anterior (PREVIOUS)
@@ -90,7 +135,7 @@ export class DoublyLinkedList {
         const previous = atual.previous; // {8}
 
         // faz a ligação de previous com o next de current – pula esse elemento para
-        // removê-lo;
+        // removê-lo;   1 3
         previous.next = atual.next; // {9} Ligação de avanço
         atual.next.previous = previous; // {10} NOVO: Ligação de retorno (PREVIOUS)
       }
@@ -99,42 +144,6 @@ export class DoublyLinkedList {
       return atual.element;
     }
     return undefined;
-  }
-
-  // remove(node) - remove um nó específico da lista.
-  remove(node) {
-    if (!node) {
-      return undefined;
-    }
-    if (node === this.head) {
-      this.head = node.next;
-      if (this.head) {
-        this.head.previous = undefined; // Remove a referência 'previous' do novo head
-      } else {
-        this.tail = null; // A lista ficou vazia
-      }
-    } else if (node === this.tail) {
-      this.tail = node.previous; // Atualiza tail usando previous
-      if (this.tail) {
-        this.tail.next = undefined; // Remove a referência 'next' do novo tail
-      }
-    } else {
-      // Nó no meio: faz o bypass (liga os vizinhos entre si)
-      node.previous.next = node.next; // Liga o anterior ao próximo
-      node.next.previous = node.previous; // Liga o próximo ao anterior
-    }
-
-    this.count--;
-    return node.element;
-  }
-
-  // --- Métodos principais obrigatórios da liked list ---
-
-  // adiciona um elemento no final de um objeto LinkedList
-  // Reutiliza o método insertDoubly, passando o índice final
-  insert(element) {
-    // Reutiliza a lógica de inserção no final do insertDoubly
-    return this.insertDoubly(element, this.count);
   }
 
   // esse método devolve o elemento que está em
@@ -150,16 +159,6 @@ export class DoublyLinkedList {
       return node;
     }
     return undefined;
-  }
-
-  // getNext(node) - retorna o próximo nó.
-  getNext(node) {
-    return node ? node.next : undefined;
-  }
-
-  // getPrev(node) - retorna o nó anterior.
-  getPrev(node) {
-    return node ? node.previous : undefined; // Retorna o nó anterior (previous)
   }
 
   // --- Métodos acessórios obrigatórios ---
@@ -200,20 +199,5 @@ export class DoublyLinkedList {
       }
       this.count -= removedCount;
     }
-  }
-
-  // Retorna a representação em string da lista. (Acessório, para testes)
-  toString() {
-    if (this.head === null) {
-      return "[]";
-    }
-    let objString = `[${this.head.element}`;
-    let current = this.head.next;
-    while (current != null) {
-      objString = `${objString}, ${current.element}`;
-      current = current.next;
-    }
-    objString += "]";
-    return objString;
   }
 }
