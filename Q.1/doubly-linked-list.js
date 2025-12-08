@@ -101,8 +101,8 @@ export class DoublyLinkedList {
     return undefined;
   }
 
-  // removeElement(node) - remove um nó específico da lista.
-  removeElement(node) {
+  // remove(node) - remove um nó específico da lista.
+  remove(node) {
     if (!node) {
       return undefined;
     }
