@@ -200,19 +200,4 @@ export class DoublyLinkedList {
       this.count -= removedCount;
     }
   }
-
-  // Retorna a representação em string da lista. (Acessório, para testes)
-  toString() {
-    if (this.head === null) {
-      return "[]";
-    }
-    let objString = `[${this.head.element}`;
-    let current = this.head.next;
-    while (current != null) {
-      objString = `${objString}, ${current.element}`;
-      current = current.next;
-    }
-    objString += "]";
-    return objString;
-  }
 }
