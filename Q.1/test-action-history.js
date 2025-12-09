@@ -1,7 +1,7 @@
 import { ActionHistory } from "./action-history.js";
 
 function print(title, value) {
-  console.log(\n===== ${title} =====);
+  console.log("\n===== ${title} =====");
   console.log(value);
 }
 

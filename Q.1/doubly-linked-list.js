@@ -93,7 +93,9 @@ export class DoublyLinkedList {
     return node ? node.previous : null;
   }
 
-
+  // Remove todos os nós a partir de "node"
+  clearFrom(node) {
+    if (!node) return;
 
     // Caso seja para limpar tudo
     if (node === this.head) {
