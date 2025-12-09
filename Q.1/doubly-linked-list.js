@@ -59,6 +59,7 @@ export class DoublyLinkedList {
   }
 
   // --- Métodos principais obrigatórios da liked list ---
+  
   // Inserindo um novo elemento em qualquer posição
   insertDoubly(element, index) {
     // Verifica se o index (a posição) é válido.

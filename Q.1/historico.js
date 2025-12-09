@@ -85,13 +85,23 @@ export class ActionHistory {
   isEmpty() {
     return this.history.isEmpty();
   }
-
+  
   size() {
     return this.history.size();
   }
 
+<<<<<<< Updated upstream
   /*
   Remove um item da lista pelo valor informado
 */
 
+=======
+    
+
+        
+
+        
+       
+   
+>>>>>>> Stashed changes
 }
