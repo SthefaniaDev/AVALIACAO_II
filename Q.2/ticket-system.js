@@ -23,6 +23,9 @@ module.exports = class TicketSystem{
 
     //Pula a senha atual e vai para a seguinte, mantendo o fluxo circular.
     skip(){
+        if (this.ticketList.isEmpty()){
+            return false;
+        }
         this.ticketList.next();
         //Retorna true só para indicar sucesso na execução do método.
         return true;

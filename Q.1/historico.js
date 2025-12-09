@@ -95,13 +95,4 @@ export class ActionHistory {
   Remove um item da lista pelo valor informado
 */
 
-=======
-    
-
-        
-
-        
-       
-   
->>>>>>> Stashed changes
 }
