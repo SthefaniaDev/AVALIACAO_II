@@ -16,7 +16,7 @@ Para rodar os casos de teste e verificar o funcionamento da `DoublyLinkedList` e
 2.  **Execute o arquivo de testes** usando o Node:
 
     ```bash
-    node testsProblem1.js
+    node test-action-history.js
     ```
 
     O terminal exibirá a saída de cada sequência de teste, confirmando o estado da lista e do ponteiro atual após as operações de `execute`, `undo`, `redo`, e `clearFrom`.
@@ -25,10 +25,10 @@ Para rodar os casos de teste e verificar o funcionamento da `DoublyLinkedList` e
 
 | Arquivo | Descrição |
 | :--- | :--- |
-| `nodeDoubly.js` | Classe `nodeDoubly` que representa um nó com ponteiros `next` e `prev`. |
-| `doubly-Linked-List.js` | **Implementação da Lista Duplamente Encadeada** (`DoublyLinkedList`) com todos os métodos essenciais (`insert`, `remove`, `clearFrom`,`insertDoubly` etc.). |
-| `Historico.js` | **Solução do Problema 1** (`ActionHistory`). Gerencia o histórico de ações, utilizando a `DoublyLinkedList` para o mecanismo de Undo/Redo. |
-| `teste.js` | Conjunto de **testes completos** que demonstram o comportamento do sistema de histórico, cobrindo todos os cenários obrigatórios. |
+| `node.js` | Classe `Node` que representa um nó com ponteiros `next` e `previous`. |
+| `doubly-linked-list.js` | **Implementação da Lista Duplamente Encadeada** (`DoublyLinkedList`) com todos os métodos essenciais (`insert`, `remove`, `clearFrom`,`insertDoubly` etc.). |
+| `action-history.js` | **Solução do Problema 1** (`ActionHistory`). Gerencia o histórico de ações, utilizando a `DoublyLinkedList` para o mecanismo de Undo/Redo. |
+| `test-action-history.js` | Conjunto de **testes completos** que demonstram o comportamento do sistema de histórico, cobrindo todos os cenários obrigatórios. |
 
 
 
@@ -56,7 +56,7 @@ Para rodar os casos de teste e verificar o funcionamento da `CircularLinkedList`
 2. **Execute o arquivo de testes** usando o Node:
 
    ```bash
-   node teste.js
+   node test-ticket-system.js
    ```
 
    O terminal exibirá toda a simulação do sistema de senhas: emissão, chamadas sucessivas, pulos, remoções, reinício do ciclo e comportamento circular contínuo.
@@ -65,9 +65,9 @@ Para rodar os casos de teste e verificar o funcionamento da `CircularLinkedList`
 
 | Arquivo                 | Descrição                                                                                                                                                     |
 | :---------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `node.js`               | Classe `nodeList` que representa um nó da lista, armazenando o valor e o ponteiro `next`.                                                                     |
-| `CircularLinkedList.js` | **Implementação da Lista Circular** (`CircularLinkedList`) com métodos essenciais (`insert`, `remove`, `next`, `current`, `clear`, `size`, `isEmpty`).        |
-| `TicketSystem.js`       | **Solução do Problema 2**, que utiliza a lista circular para simular um sistema real de senhas (emitir, chamar, pular, remover e reiniciar ciclo).            |
-| `teste.js`              | Conjunto de **testes completos**, mostrando o comportamento circular, a movimentação contínua, remoções em todos os casos e o funcionamento geral do sistema. |
+| `node.js`               | Classe `Node` que representa um nó da lista, armazenando o valor e o ponteiro `next`.                                                                     |
+| `circular-linked-list.js` | **Implementação da Lista Circular** (`CircularLinkedList`) com métodos essenciais (`insert`, `remove`, `next`, `current`, `clear`, `size`, `isEmpty`).        |
+| `ticket-system.js`       | **Solução do Problema 2**, que utiliza a lista circular para simular um sistema real de senhas (emitir, chamar, pular, remover e reiniciar ciclo).            |
+| `test-ticket-system.js`              | Conjunto de **testes completos**, mostrando o comportamento circular, a movimentação contínua, remoções em todos os casos e o funcionamento geral do sistema. |
 
 ---
