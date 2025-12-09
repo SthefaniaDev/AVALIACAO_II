@@ -1,4 +1,4 @@
-import DoublyNode from "./nodeDoubly.js";
+import Node from "./node.js";
 
 function defaultEquals(a, b) {
   return a === b; //comparação de igualdade entre os elementos da lista ligada
@@ -63,7 +63,7 @@ export class DoublyLinkedList {
   insertDoubly(element, index) {
     // Verifica se o index (a posição) é válido.
     if (index >= 0 && index <= this.count) {
-      const node = new DoublyNode(element);
+      const node = new Node(element);
       let atual; // Variável auxiliar
 
       // Inserir no Índice 0 (No Início)

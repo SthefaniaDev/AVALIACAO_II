@@ -16,7 +16,7 @@ Para rodar os casos de teste e verificar o funcionamento da `DoublyLinkedList` e
 2.  **Execute o arquivo de testes** usando o Node:
 
     ```bash
-    node testsProblem1.js
+    node test-action-history.js
     ```
 
     O terminal exibirá a saída de cada sequência de teste, confirmando o estado da lista e do ponteiro atual após as operações de `execute`, `undo`, `redo`, e `clearFrom`.
@@ -25,10 +25,10 @@ Para rodar os casos de teste e verificar o funcionamento da `DoublyLinkedList` e
 
 | Arquivo | Descrição |
 | :--- | :--- |
-| `nodeDoubly.js` | Classe `nodeDoubly` que representa um nó com ponteiros `next` e `prev`. |
-| `doubly-Linked-List.js` | **Implementação da Lista Duplamente Encadeada** (`DoublyLinkedList`) com todos os métodos essenciais (`insert`, `remove`, `clearFrom`,`insertDoubly` etc.). |
-| `Historico.js` | **Solução do Problema 1** (`ActionHistory`). Gerencia o histórico de ações, utilizando a `DoublyLinkedList` para o mecanismo de Undo/Redo. |
-| `teste.js` | Conjunto de **testes completos** que demonstram o comportamento do sistema de histórico, cobrindo todos os cenários obrigatórios. |
+| `node.js` | Classe `Node` que representa um nó com ponteiros `next` e `previous`. |
+| `doubly-linked-list.js` | **Implementação da Lista Duplamente Encadeada** (`DoublyLinkedList`) com todos os métodos essenciais (`insert`, `remove`, `clearFrom`,`insertDoubly` etc.). |
+| `action-history.js` | **Solução do Problema 1** (`ActionHistory`). Gerencia o histórico de ações, utilizando a `DoublyLinkedList` para o mecanismo de Undo/Redo. |
+| `test-action-history.js` | Conjunto de **testes completos** que demonstram o comportamento do sistema de histórico, cobrindo todos os cenários obrigatórios. |
 
 
 
