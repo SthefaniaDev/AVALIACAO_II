@@ -47,12 +47,4 @@ export class ActionHistory {
   size() {
     return this.history.size();
   }
-<<<<<<< HEAD:Q.1/historico.js
-=======
-
-  /*
-  Remove um item da lista pelo valor informado
-*/
-
->>>>>>> 1ca8d476677d4086517f92fb7987b813f982fe00:Q.1/action-history.js
 }
