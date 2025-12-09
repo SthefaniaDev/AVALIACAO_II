@@ -1,4 +1,4 @@
-import {DoublyLinkedList} from "./doubly-linked-list.js"
+import { DoublyLinkedList } from "./doubly-linked-list.js";
 export class ActionHistory {
   constructor() {
     // Começa vazio
@@ -15,18 +15,21 @@ export class ActionHistory {
   }
 
   undo() {
-    // Volta 1 ação
-    return this.currentAction?.prev
-      ? ((this.currentAction = this.currentAction.prev), true)
-      : false;
+    if (this.currentAction && this.currentAction.previous) {
+      this.currentAction = this.currentAction.previous;
+      return true;
+    }
+    return false;
   }
 
   redo() {
-    // Avança 1 ação
-    return this.currentAction?.next
-      ? ((this.currentAction = this.currentAction.next), true)
-      : false;
+    if (this.currentAction && this.currentAction.next) {
+      this.currentAction = this.currentAction.next;
+      return true;
+    }
+    return false;
   }
+
   current() {
     if (this.currentAction) {
       return this.currentAction.element;
