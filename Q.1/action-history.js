@@ -1,3 +1,4 @@
+import {DoublyLinkedList} from "./doubly-linked-list.js"
 export class ActionHistory {
   constructor() {
     // Começa vazio

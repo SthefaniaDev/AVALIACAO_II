@@ -1,153 +1,103 @@
 import { ActionHistory } from "./action-history.js";
 
+function print(title, value) {
+  console.log(`\n===== ${title} =====`);
+  console.log(value);
+}
+
+console.log("======== INICIANDO TESTES DO SISTEMA DE HISTÓRICO ========");
+
+// --------------------------------------------------------------
+// 1. Registrar múltiplas ações (A → B → C)
+// --------------------------------------------------------------
 const history = new ActionHistory();
 
-console.log("INÍCIO DOS TESTES DO EDITOR DE TEXTO COM UNDO/REDO\n");
+history.execute("A");
+history.execute("B");
+history.execute("C");
 
-// Teste de registrar múltiplas ações
-console.log("Teste de registrar múltiplas ações:");
-history.execute("Inseriu texto 'Olá'");
-history.execute("Formatou em negrito");
-history.execute("Apagou última palavra");
-console.log("Ações: A → B → C registradas");
-console.log("Quantidade de ações: " + history.size());
-console.log("Ação atual: " + history.current() + "\n");
+print("1) Tamanho da lista após A → B → C", history.size());
+print("1) Ação atual deve ser 'C'", history.current());
 
-// Teste de executar múltiplos undos
-console.log("Teste de executar múltiplos undos:");
-console.log("Iniciando com ações A → B → C");
-console.log("Estado inicial - Ação atual: " + history.current());
+// --------------------------------------------------------------
+// 2. Executar múltiplos undos (C → B → A)
+// --------------------------------------------------------------
+history.undo(); // C → B
+history.undo(); // B → A
 
-console.log("Primeiro undo (volta para B):");
-history.undo();
-console.log("Ação atual após undo: " + history.current());
+print("2) Ação atual após 2 undos (deve ser 'A')", history.current());
 
-console.log("Segundo undo (volta para A):");
-history.undo();
-console.log("Ação atual após undo: " + history.current());
+// --------------------------------------------------------------
+// 3. Executar múltiplos redos
+// --------------------------------------------------------------
+// A → B → C (já existente)
+// ponteiro está em A
+history.redo(); // A → B
+history.redo(); // B → C
 
-console.log("Terceiro undo (já na primeira, não faz nada):");
-const undoResult = history.undo();
-console.log("Resultado do undo (false = não fez nada): " + undoResult);
-console.log("Ação atual permanece: " + history.current() + "\n");
+print("3) Ação atual após 2 redos (deve ser 'C')", history.current());
 
-// Teste de executar múltiplos redos
-console.log("Teste de executar múltiplos redos:");
-console.log("Primeiro redo (avança para B):");
-history.redo();
-console.log("Ação atual após redo: " + history.current());
-
-console.log("Segundo redo (avança para C):");
-history.redo();
-console.log("Ação atual após redo: " + history.current());
-
-console.log("Terceiro redo (já na última, não faz nada):");
-const redoResult = history.redo();
-console.log("Resultado do redo (false = não fez nada): " + redoResult);
-console.log("Ação atual permanece: " + history.current() + "\n");
-
-// Teste de executar nova ação após undo
-console.log("Teste de executar nova ação após undo (cenário fundamental):");
+// --------------------------------------------------------------
+// 4. Executar nova ação após undo
+// Cenário fundamental
+// A → B → C
+// undo até B
+// executar D
+// C deve ser apagado do futuro
+// --------------------------------------------------------------
 
 const history2 = new ActionHistory();
-history2.execute("Ação A");
-history2.execute("Ação B");
-history2.execute("Ação C");
-console.log("Executadas ações: A → B → C");
-console.log("Quantidade inicial: " + history2.size());
-console.log("Ação atual inicial: " + history2.current());
 
-console.log("Undo até B:");
-history2.undo();
-console.log("Ação atual após undo: " + history2.current());
+history2.execute("A");
+history2.execute("B");
+history2.execute("C");
+history2.undo(); // volta para B
+history2.execute("D"); // adiciona nova ação, apaga o futuro (C)
 
-console.log("Executando nova ação D:");
-history2.execute("Ação D");
-console.log("C deve ser removida do futuro");
-console.log("Redo não deve ser mais possível após nova ação");
+print("4) Ação atual deve ser 'D'", history2.current());
+print(
+  "4) Tamanho da lista após remover futuro (A, B, D) → size=3",
+  history2.size()
+);
 
-console.log("Quantidade após nova ação (deve ser 3): " + history2.size());
-console.log("Ação atual após nova ação (deve ser D): " + history2.current());
+const redoPossible = history2.redo();
+print("4) Redo deve falhar após nova ação", redoPossible);
 
-console.log("Tentando redo (deve falhar):");
-const redoAfterNew = history2.redo();
-console.log("Resultado do redo (false = não funcionou): " + redoAfterNew);
-console.log("Ação atual permanece D: " + history2.current() + "\n");
+// --------------------------------------------------------------
+// 5. Limpar todo o histórico (clearAll)
+// --------------------------------------------------------------
 
-// Teste de limpar todo o histórico
-console.log("Teste de limpar todo o histórico:");
 const history3 = new ActionHistory();
-history3.execute("Teste 1");
-history3.execute("Teste 2");
-console.log("Histórico com 2 ações, ação atual: " + history3.current());
-
+history3.execute("X");
+history3.execute("Y");
 history3.clearAll();
-console.log("Após clearAll():");
-console.log("current() deve retornar null: " + history3.current());
-console.log("size() deve retornar 0: " + history3.size());
 
-console.log("Undo após limpeza (não deve gerar erro):");
-history3.undo();
-console.log("Redo após limpeza (não deve gerar erro):");
-history3.redo();
-console.log();
+print("5) current() após clearAll (deve ser null)", history3.current());
+print("5) size() após clearAll (deve ser 0)", history3.size());
 
-// Testes de métodos acessórios
-console.log("Testes de métodos acessórios:");
+// Testando se undo ou redo quebram
+print("5) Undo após clearAll (deve ser false e não quebrar)", history3.undo());
+print("5) Redo após clearAll (deve ser false e não quebrar)", history3.redo());
+
+// --------------------------------------------------------------
+// 6. Testes de métodos acessórios
+// --------------------------------------------------------------
+
 const history4 = new ActionHistory();
 
-console.log("isEmpty() em lista vazia (deve ser true): " + history4.isEmpty());
+print("6) isEmpty() em histórico vazio (true)", history4.isEmpty());
+history4.execute("Hello");
+print("6) isEmpty() após inserir ação (false)", history4.isEmpty());
+print("6) size() após 1 ação (deve ser 1)", history4.size());
 
-history4.execute("Primeira ação");
-console.log("isEmpty() após uma ação (deve ser false): " + history4.isEmpty());
-console.log("size() após uma ação (deve ser 1): " + history4.size());
+// Testando clearFrom() diretamente
+history4.execute("World");
+history4.undo(); // volta para "Hello"
+history4.history.clearFrom(history4.currentAction.next); // apaga futuro
 
-history4.execute("Segunda ação");
-history4.execute("Terceira ação");
-console.log("size() após três ações (deve ser 3): " + history4.size());
+print(
+  "6) size() após clearFrom() apagar 'World' (deve ser 1)",
+  history4.size()
+);
 
-console.log("Testando clearFrom internamente:");
-history4.undo(); // Vai para segunda ação
-history4.execute("Nova ação após undo");
-console.log("size() após clearFrom implícito (deve ser 3): " + history4.size());
-console.log("Ação atual: " + history4.current() + "\n");
-
-// Cenário complexo com múltiplas operações
-console.log("Cenário complexo com múltiplas operações:");
-const historyFinal = new ActionHistory();
-
-historyFinal.execute("Digitar 'Hello'");
-historyFinal.execute("Formatar título");
-historyFinal.execute("Inserir imagem");
-historyFinal.execute("Ajustar margens");
-console.log("Sequência inicial de 4 ações");
-console.log("Ação atual: " + historyFinal.current());
-
-console.log("Navegando pelo histórico:");
-historyFinal.undo();
-console.log("Após undo 1: " + historyFinal.current());
-
-historyFinal.undo();
-console.log("Após undo 2: " + historyFinal.current());
-
-historyFinal.redo();
-console.log("Após redo 1: " + historyFinal.current());
-
-historyFinal.execute("Mudar fonte");
-console.log("Nova ação 'Mudar fonte' executada");
-console.log("Ação atual: " + historyFinal.current());
-console.log("Tamanho do histórico (deve ser 4): " + historyFinal.size());
-
-console.log("Tentando acessar futuro limpo:");
-const canRedo = historyFinal.redo();
-console.log("Redo possível? (false = não): " + canRedo);
-console.log("Ação atual permanece: " + historyFinal.current());
-console.log();
-
-// Estado final do sistema
-console.log("Estado final do sistema:");
-console.log("Quantidade total de ações no histórico: " + historyFinal.size());
-console.log("Ação atual: " + historyFinal.current());
-console.log("Histórico vazio? " + historyFinal.isEmpty());
-
-console.log("\nTESTES CONCLUÍDOS");
+console.log("\n======== FIM DOS TESTES ========");

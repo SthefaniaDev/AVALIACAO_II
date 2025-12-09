@@ -1,82 +1,103 @@
-import Node from "./node.js";
+import Node from "./Dnode.js";
 
-function defaultEquals(a, b) {
-  return a === b; //comparação de igualdade entre os elementos da lista ligada
-}
-
-// Implementa uma lista duplamente encadeada completa.
 export class DoublyLinkedList {
-  constructor(equalsFn = defaultEquals) {
+  constructor() {
+    this.head = null;
+    this.tail = null;
     this.count = 0;
-    this.head = undefined; // Referência interna para o início da lista
-    this.tail = undefined; // Referência interna para o final da lista (NOVO)
-    this.equalsFn = equalsFn;
   }
 
-  // --- Métodos principais obrigatórios da Doubly liked list ---
+  // Inserção padrão: sempre no final.
   insert(element) {
-    // adiciona um elemento no final de um objeto LinkedList
-    // Reutiliza a lógica de inserção no final do insertDoubly
     return this.insertDoubly(element, this.count);
   }
 
+  // Inserção otimizada
+  insertDoubly(element, index) {
+    if (index < 0 || index > this.count) return false;
+
+    const newNode = new Node(element);
+
+    // Inserção na lista vazia
+    if (this.count === 0) {
+      this.head = newNode;
+      this.tail = newNode;
+    }
+
+    // Inserção no início
+    else if (index === 0) {
+      newNode.next = this.head;
+      this.head.previous = newNode;
+      this.head = newNode;
+    }
+
+    // Inserção no final (otimizado, sem getElementAt)
+    else if (index === this.count) {
+      newNode.previous = this.tail;
+      this.tail.next = newNode;
+      this.tail = newNode;
+    }
+
+    // Inserção no meio
+    else {
+      const previousNode = this.getElementAt(index - 1);
+      const nextNode = previousNode.next;
+
+      newNode.previous = previousNode;
+      newNode.next = nextNode;
+      previousNode.next = newNode;
+      nextNode.previous = newNode;
+    }
+
+    this.count++;
+    return true;
+  }
+
+  // remove(node) – remove um nó específico
   remove(node) {
-    // remove(node) - remove um nó específico da lista.
     if (!node) return undefined;
 
-    const { previous, next } = node;
+    const prev = node.previous;
+    const next = node.next;
 
     // Removendo head
     if (node === this.head) {
       this.head = next;
-      if (this.head) {
-        this.head.previous = undefined;
-      } else {
-        this.tail = null;
-      }
+      if (next) next.previous = null;
+      else this.tail = null; // lista ficou vazia
     }
+
     // Removendo tail
     else if (node === this.tail) {
-      this.tail = previous;
-      if (this.tail) {
-        this.tail.next = undefined;
-      }
+      this.tail = prev;
+      if (prev) prev.next = null;
     }
-    // Removendo no meio
+
+    // Removendo nó do meio
     else {
-      previous.next = next;
-      next.previous = previous;
+      prev.next = next;
+      next.previous = prev;
     }
 
     this.count--;
     return node.element;
   }
 
-  // getNext(node) - retorna o próximo nó.
+  // Retorna próximo nó
   getNext(node) {
-    return node ? node.next : undefined;
+    return node ? node.next : null;
   }
 
-  // getPrev(node) - retorna o nó anterior.
+  // Retorna nó anterior
   getPrev(node) {
-    return node ? node.previous : undefined;
+    return node ? node.previous : null;
   }
 
-  // --- Métodos acessórios obrigatórios ---
-  isEmpty() {
-    return this.size() === 0;
-  }
-
-  size() {
-    return this.count;
-  }
-
-  // clearFrom(node) - remove todos os nós a partir do nó informado até o final.
-  // (Usado para limpar o "futuro" após um Undo seguido de nova ação).
+  // Remove todos os nós a partir de "node"
   clearFrom(node) {
     if (!node) return;
 
-    // limpar tudo
+    // Caso seja para limpar tudo
     if (node === this.head) {
       this.head = null;
       this.tail = null;
@@ -84,12 +105,12 @@ export class DoublyLinkedList {
       return;
     }
 
-    // limpar a partir de um ponto no meio
+    // Cortar a lista
     const newTail = node.previous;
-    newTail.next = undefined;
+    newTail.next = null;
     this.tail = newTail;
 
-    // Recontar removidos
+    // Recalcular quantidade removida
     let removed = 0;
     let current = node;
     while (current) {
@@ -98,89 +119,37 @@ export class DoublyLinkedList {
     }
 
     this.count -= removed;
-  }
-  // --- Métodos principais obrigatórios da liked list ---
-  insertDoubly(element, index) {
-    if (index < 0 || index > this.count) return false;
-
-    const newNode = new Node(element);
-
-    // Inserção no início
-    if (index === 0) {
-      if (this.head == null) {
-        // lista vazia
-        this.head = newNode;
-        this.tail = newNode;
-      } else {
-        newNode.next = this.head;
-        this.head.previous = newNode;
-        this.head = newNode;
-      }
-    }
-    // Inserção no final
-    else if (index === this.count) {
-      const currentTail = this.tail;
-      currentTail.next = newNode;
-      newNode.previous = currentTail;
-      this.tail = newNode;
-    }
-    // Inserção no meio
-    else {
-      const previousNode = this.getElementAt(index - 1);
-      const currentNode = previousNode.next;
-
-      newNode.next = currentNode;
-      newNode.previous = previousNode;
-      previousNode.next = newNode;
-      currentNode.previous = newNode;
-    }
-
-    this.count++;
-    return true;
+    if (this.count < 0) this.count = 0; // segurança extra
   }
 
-  removeAt(index) {
-    if (index < 0 || index >= this.count) return undefined;
-
-    let current = this.head;
-
-    // Remover início
-    if (index === 0) {
-      this.head = current.next;
-
-      if (this.count === 1) {
-        this.tail = undefined;
-      } else {
-        this.head.previous = undefined;
-      }
-    }
-    // Remover final
-    else if (index === this.count - 1) {
-      current = this.tail;
-      this.tail = current.previous;
-      this.tail.next = undefined;
-    }
-    // Remover meio
-    else {
-      current = this.getElementAt(index);
-      const previousNode = current.previous;
-
-      previousNode.next = current.next;
-      current.next.previous = previousNode;
-    }
-
-    this.count--;
-    return current.element;
-  }
-
+  // getElementAt otimizado usando head e tail
   getElementAt(index) {
-    if (index < 0 || index >= this.count) return undefined;
+    if (index < 0 || index >= this.count) return null;
 
-    let current = this.head;
-    for (let i = 0; i < index; i++) {
-      current = current.next;
+    let current;
+    let i;
+
+    //escolhe o lado mais rápido
+    if (index < this.count / 2) {
+      current = this.head;
+      for (i = 0; i < index; i++) {
+        current = current.next;
+      }
+    } else {
+      current = this.tail;
+      for (i = this.count - 1; i > index; i--) {
+        current = current.previous;
+      }
     }
 
     return current;
+  }
+
+  size() {
+    return this.count;
+  }
+
+  isEmpty() {
+    return this.count === 0;
   }
 }
